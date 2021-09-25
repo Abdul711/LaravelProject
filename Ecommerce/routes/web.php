@@ -16,7 +16,10 @@ use App\Http\Controllers\AdminController;
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/admin',[AdminController::class,"index"]);
+Route::get('admin/signup',[AdminController::class,"signup"]);
+Route::get('admin/forgot',[AdminController::class,"forgot"]);
 Route::get('admin/users/{id}', function ($id) {
     
 });

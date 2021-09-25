@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Login</title>
+    <title>Register</title>
 
     <!-- Fontfaces CSS-->
     <link href="{{asset('AdminStyle/css/font-face.css')}}" rel="stylesheet" media="all">
@@ -35,7 +35,6 @@
     <link href="{{asset('AdminStyle/css/theme.css')}}" rel="stylesheet" media="all">
 
 </head>
-
 <body class="animsition">
     <div class="page-wrapper">
         <div class="page-content--bge5">
@@ -47,8 +46,16 @@
                                 <img src="{{asset('AdminStyle/images/icon/logo.png')}}" alt="CoolAdmin">
                             </a>
                         </div>
+                        <p>
+                                    Already have account?
+                                    <a href="{{url('admin')}}">Sign In</a>
+                                </p>
                         <div class="login-form">
                             <form action="" method="post">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input class="au-input au-input--full" type="text" name="username" placeholder="Username">
+                                </div>
                                 <div class="form-group">
                                     <label>Email Address</label>
                                     <input class="au-input au-input--full" type="email" name="email" placeholder="Email">
@@ -57,22 +64,38 @@
                                     <label>Password</label>
                                     <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
                                 </div>
+                                <div class="form-group">
+                                    <label>Mobile</label>
+                                    <input class="au-input au-input--full" type="text" name="mobile" placeholder="Mobile">
+                                </div>
+                                <div class="container">  
+                                    <div class="row">
+                                        <div class="col-6 col-lg-6">
                                 <div class="login-checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember">Remember Me
-                                    </label>
-                                    <label>
-                                        <a href="{{url('admin/forgot')}}">Forgotten Password?</a>
+                                        <input type="checkbox" name="post">Vendor
                                     </label>
                                 </div>
-                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
-                            
+</div>
+                                <div class="login-checkbox">
+                                    <label>
+                                        <input type="checkbox" name="post">Rider
+                                    </label>
+                                </div> 
+</div> 
+                      </div>
+                      
+                                
+                                <div class="login-checkbox">
+                                    <label>
+                                        <input type="checkbox" name="aggree">Agree the terms and policy
+                                    </label>
+                                </div>
+                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">register</button>
+                           
                             </form>
                             <div class="register-link">
-                                <p>
-                                    Don't you have account?
-                                    <a href="{{url('admin/signup')}}">Sign Up Here</a>
-                                </p>
+                             
                             </div>
                         </div>
                     </div>

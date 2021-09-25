@@ -10,4 +10,13 @@ class AdminController extends Controller
      {
   return view("admin/login");   
      }
+      public function signup()
+     {
+        return view('admin/signup');
+     }
+     public function forgot()
+     {
+         
+        return view('admin/forgot');
+     }
 }
