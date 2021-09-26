@@ -19,4 +19,7 @@ class AdminController extends Controller
          
         return view('admin/forgot');
      }
+     public function register(){
+
+     }
 }
