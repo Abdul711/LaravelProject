@@ -18,9 +18,11 @@ Route::get('/', function () {
 });
 
 Route::get('/admin',[AdminController::class,"index"]);
+Route::post('/admin',[AdminController::class,"login"]);
 Route::get('admin/signup',[AdminController::class,"signup"]);
 Route::post('admin/signup',[AdminController::class,"register"]);
 Route::get('admin/forgot',[AdminController::class,"forgot"]);
+Route::get('admin/dashboard',[AdminController::class,"dashboard"]);
 Route::get('admin/users/{id}', function ($id) {
     
 });

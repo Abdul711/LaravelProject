@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+   public function login(){
+
+   }
      public function index()
      {
   return view("admin/login");   
@@ -22,4 +25,7 @@ class AdminController extends Controller
      public function register(){
 
      }
+     public function dashboard(){
+return view("admin/index");
+   }
 }
