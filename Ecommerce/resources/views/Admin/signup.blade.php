@@ -50,36 +50,108 @@
                                     Already have account?
                                     <a href="{{url('admin')}}">Sign In</a>
                                 </p>
+                                
+                                             
+                                                    	
+                                             
+                                        
+                                @error('username')
+    @if($message!="")
+    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+     
+        {{$message}}	
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div> 
+@endif
+@enderror          
+@error('mobile')
+    @if($message!="")
+    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+     
+        {{$message}}	
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div> 
+@endif
+@enderror  
+@error('password')
+    @if($message!="")
+    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+     
+        {{$message}}	
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div> 
+@endif
+@enderror        
+@error('email')
+    @if($message!="")
+    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+     
+        {{$message}}	
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div> 
+@endif
+@enderror        
+@error('post')
+    @if($message!="")
+    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+     
+        {{$message}}	
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div> 
+@endif
+@enderror   
+
+@if(session()->has("successmsg"))
+<div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+  {{session()->get("successmsg")}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div> 
+@endif
+
                         <div class="login-form">
                             <form action="" method="post">
                                 <div class="form-group">
                                     <label>Username</label>
-                                    <input class="au-input au-input--full" type="text" name="username" placeholder="Username">
+                                    <input class="au-input au-input--full" value="{{old('username')}}" type="text" name="username" placeholder="Username">
                                 </div>
                                 <div class="form-group">
                                     <label>Email Address</label>
-                                    <input class="au-input au-input--full" type="email" name="email" placeholder="Email">
+                                    <input class="au-input au-input--full"  value="{{old('email')}}"  type="email" name="email" placeholder="Email">
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
+                                    <input class="au-input au-input--full"  value="{{old('password')}}"  type="password" name="password" placeholder="Password">
                                 </div>
                                 <div class="form-group">
                                     <label>Mobile</label>
-                                    <input class="au-input au-input--full" type="text" name="mobile" placeholder="Mobile">
+                                    <input class="au-input au-input--full"  value="{{old('mobile')}}"   type="text" name="mobile" placeholder="Mobile">
                                 </div>
                                 <div class="container">  
+                                POST
                                     <div class="row">
                                         <div class="col-6 col-lg-6">
+                                          
                                 <div class="login-checkbox">
                                     <label>
-                                        <input type="checkbox" name="post">Vendor
+                                        <input type="radio" value="vendor" name="post">Vendor
                                     </label>
                                 </div>
 </div>
                                 <div class="login-checkbox">
                                     <label>
-                                        <input type="checkbox" name="post">Rider
+                                        <input type="radio" value="rider" name="post">Rider
                                     </label>
                                 </div> 
 </div> 
@@ -88,11 +160,20 @@
                                 
                                 <div class="login-checkbox">
                                     <label>
-                                        <input type="checkbox" name="aggree">Agree the terms and policy
+                                        <input type="checkbox" value="agree" name="aggree">Agree the terms and policy
                                     </label>
                                 </div>
+                            @if(session()->has('agreecondition'))
+    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+  {{session()->get("agreecondition")}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div> 
+    @endif
+      @csrf
                                 <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">register</button>
-                           
+                     
                             </form>
                             <div class="register-link">
                              
