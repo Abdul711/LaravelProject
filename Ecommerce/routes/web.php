@@ -30,6 +30,7 @@ Route::get('admin/forgot',[AdminController::class,"forgot"]);
 Route::get('admin/dashboard',[AdminController::class,"dashboard"]);
 Route::get('admin/category/manage/{id?}',[CategoryController::class,"create"]);
 Route::get('admin/category',[CategoryController::class,"index"]);
+Route::post('admin/category/manageprocess',[CategoryController::class,"store"])->name('category.store');
 /* Category Crud Operation */
 Route::get('admin/product/manage/{id?}',[ProductController::class,"create"]);
 Route::get('admin/product',[ProductController::class,"index"]);

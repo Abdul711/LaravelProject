@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Validator;
 use DB;
 class CategoryController extends Controller
 {
@@ -14,6 +15,21 @@ class CategoryController extends Controller
      */
     public function index()
     {
+      /*  $otps=rand(89,456);
+        $mobilenumber="92332356586";
+        $arr=json_encode(array('body' =>"Hello Your Otp is $otps" ,"phone"=>$mobilenumber ));
+       $url= "https://api.chat-api.com/instance343403/message?token=d1q7370j3sn889na";
+       $ch = curl_init();
+       curl_setopt($ch,CURLOPT_URL,$url);
+       curl_setopt($ch,CURLOPT_POST,true);
+       curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+       curl_setopt($ch,CURLOPT_POSTFIELDS,$arr);
+       curl_setopt($ch,CURLOPT_HTTPHEADER,array('Content-type:application/json' ,"Content-length:".strlen($arr) ));
+
+     $result=curl_exec($ch);
+     curl_close($ch);
+     echo $result;*/
+     
        $data["categories"]=DB::table('categories')->get();
        return view("admin/category");
     }
@@ -25,7 +41,17 @@ class CategoryController extends Controller
      */
     public function create($id="")
     {
-        return view("admin/manage_category");
+        if($id>0 && $id!=""){
+            $pageTitle="Update Category";
+            $fontAwe="edit";
+        }else{
+            $pageTitle="Add Category";
+            $fontAwe="trash";
+            $fontAwe="plus";
+        }
+        $result["pageTitle"]=$pageTitle;
+        $result["fontAwe"]=$fontAwe;
+        return view("admin/manage_category",$result);
     }
 
     /**
@@ -36,7 +62,45 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validator = Validator::make($request->all(), ["categoryName"=>"required", 
+         'image' => 'required'
+        
+        
+        ]) ;
+      $y=  url()->previous();
+  if ($validator->fails()) {
+    return redirect($y)
+                ->withErrors($validator)
+                ->withInput();
+
+}else{
+echo"<pre>";
+          print_r($request->post());
+       $image=$request->file("image");
+       $ext=$image->extension();
+       $image_name=time().'.'.$ext;
+
+$dated=date('d-F-Y');
+$monthed=date('F');
+$ye=date("Y");
+$path="/public/media/category";
+DB::table('categories')->insert([
+    "categories_name"=>$categoryName;
+    "parentId"=>0,
+    "status"=>1
+    "image"=>$image_name
+]);
+
+       $image->storeAs($path,$image_name);
+   /*   echo $trimmed = str_replace("/public/", ' ',$path);
+
+          echo"</pre>";     
+         echo  asset('storage/media/');
+         */
+
+
+}
     }
 
     /**
