@@ -31,7 +31,7 @@ class CategoryController extends Controller
      echo $result;*/
      
        $data["categories"]=DB::table('categories')->get();
-       return view("admin/category");
+       return view("admin/category",$data);
     }
 
     /**
@@ -42,15 +42,22 @@ class CategoryController extends Controller
     public function create($id="")
     {
         if($id>0 && $id!=""){
+               $data=DB::table("categories")->where("id","=",$id)->get();
             $pageTitle="Update Category";
             $fontAwe="edit";
+            $categoryName=$data[0]->categories_name;
         }else{
             $pageTitle="Add Category";
             $fontAwe="trash";
             $fontAwe="plus";
+            $categoryName="";
+
         }
+        $result["parents_id"]=DB::table('categories')->where('parent_id','=',0)->get();
         $result["pageTitle"]=$pageTitle;
         $result["fontAwe"]=$fontAwe;
+        $result["categoryName"]=$categoryName;
+        $result["id"]=$id;
         return view("admin/manage_category",$result);
     }
 
@@ -62,12 +69,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+  $id=$request->post('id');
+           if($id==""){
+          $imageValid ="required";
+           }else{
+               $imageValid="";
+           }
 
-        $validator = Validator::make($request->all(), ["categoryName"=>"required", 
-         'image' => 'required'
-        
-        
-        ]) ;
+        $validator = Validator::make($request->all(), [
+ 
+         'categoryName'=>'required|alpha|unique:categories,categories_name,'.$id,
+          "image"=>$imageValid
+    ],["categoryNmae.required"=>"Category Name Must Be Provided"]) ;
       $y=  url()->previous();
   if ($validator->fails()) {
     return redirect($y)
@@ -75,24 +88,52 @@ class CategoryController extends Controller
                 ->withInput();
 
 }else{
-echo"<pre>";
-          print_r($request->post());
-       $image=$request->file("image");
-       $ext=$image->extension();
-       $image_name=time().'.'.$ext;
 
+       $image=$request->file("image");
+            
+       if($request->hasfile('image')){
+           
+        $path="/public/media/category";
+        $ext=$image->extension();
+        $image_name=time().'.'.$ext;
+        $image->storeAs($path,$image_name);
+       }else{
+           if($id>0){
+            $data=DB::table("categories")->where("id","=",$id)->get();
+    $image_name=$data[0]->image;
+            
+           }
+       }
+
+   
+       $categoryName=$request->post("categoryName");
 $dated=date('d-F-Y');
 $monthed=date('F');
 $ye=date("Y");
-$path="/public/media/category";
+if($id =="") {
 DB::table('categories')->insert([
-    "categories_name"=>$categoryName;
-    "parentId"=>0,
-    "status"=>1
-    "image"=>$image_name
+    "categories_name"=>$categoryName,
+    "parent_id"=>0,
+    "status"=>1,
+    "image"=>$image_name,
+    "show_cate"=>1,
+    "added_on"=>date("Y-m-d H:i:s")
 ]);
+}else {
+    # code...
 
-       $image->storeAs($path,$image_name);
+
+    DB::table('categories')->where('id','=',$id)->update([
+        "categories_name"=>$categoryName,
+        "parent_id"=>0,
+        "status"=>1,
+        "image"=>$image_name,
+        "show_cate"=>1,
+        "added_on"=>date("Y-m-d H:i:s")
+    ]);
+}
+ 
+       return redirect('admin/category');
    /*   echo $trimmed = str_replace("/public/", ' ',$path);
 
           echo"</pre>";     
@@ -109,9 +150,21 @@ DB::table('categories')->insert([
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show_status($id)
     {
-        //
+        $data=DB::table("categories")->where("id","=",$id)->get();
+        $show_cate=$data[0]->show_cate;
+        if($show_cate==1){
+         $show_status=0;
+        }else{
+            $show_status=1;
+        }
+        DB::table('categories')->where('id','=',$id)->update([
+         
+            "show_cate"=>$show_status
+          
+        ]);
+        return redirect('admin/category');
     }
 
     /**
@@ -120,10 +173,6 @@ DB::table('categories')->insert([
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -132,9 +181,21 @@ DB::table('categories')->insert([
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update_status($id)
     {
-        //
+        $data=DB::table("categories")->where("id","=",$id)->get();
+        $show_cate=$data[0]->status;
+        if($show_cate==1){
+         $show_status=0;
+        }else{
+            $show_status=1;
+        }
+        DB::table('categories')->where('id','=',$id)->update([
+         
+            "status"=>$show_status
+          
+        ]);
+        return redirect('admin/category');
     }
 
     /**
@@ -143,8 +204,9 @@ DB::table('categories')->insert([
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category,$id)
     {
-        //
+        DB::table('categories')->where('id',$id)->delete();
+        return redirect('admin/category');
     }
 }

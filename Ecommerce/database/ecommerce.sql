@@ -92,7 +92,8 @@ CREATE TABLE `categories` (
   `image` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
   `added_on` datetime DEFAULT NULL ON UPDATE current_timestamp(),
-  `iv` varchar(230) DEFAULT NULL
+  `iv` varchar(230) DEFAULT NULL,
+  	"show_cate"  varchar(230) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

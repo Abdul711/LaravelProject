@@ -3,10 +3,28 @@
 @section("container")
 
 <div class="row">
-    @error("image")
-    {{$message}}
-    @enderror
+ 
                             <div class="col-lg-12">
+         @error("image")
+    		<div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+											<span class="badge badge-pill badge-danger">Something Went Wrong</span>
+									               {{$message}}      
+ 
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+@enderror
+       @error("categoryName")
+    		<div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+											<span class="badge badge-pill badge-danger">Something Went Wrong</span>
+									               {{$message}}      
+ 
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+@enderror
                                 <div class="card">
                                     <div class="card-header">{{$pageTitle}}</div>
                                     <div class="card-body">
@@ -14,7 +32,7 @@
                                         <form action="{{route('category.store')}}" method="post" novalidate="novalidate" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label for="cc-payment" class="control-label mb-1">Category Name</label>
-                                                <input id="cc-pament" name="categoryName" type="text" class="form-control" aria-required="true" aria-invalid="false" value="100.00">
+                                                <input id="cc-pament" name="categoryName" type="text" class="form-control" aria-required="true" aria-invalid="false" value="{{$categoryName}}{{old('categoryName')}}">
                                             </div>
                                      
                                          
@@ -23,7 +41,12 @@
                                                     <div class="form-group">
                                                         <label for="cc-exp" class="control-label mb-1">Parent Category</label>
                                                <select name="parentId" class="form-control">
-                                                   <option value=""></option> 
+                                           
+                                               <option value="0"> Select Parent Category</option>
+                                               @foreach   ($parents_id as $parent_id)
+                                                         <option value="">{{$parent_id->categories_name}}</option> 
+                                               @endforeach
+                                             
 </select>
                     
                                                     </div>
@@ -36,6 +59,7 @@
 
                                                     </div>
                                                 </div>
+                                                <input type="hidden" name="id" value="{{$id}}">
                                             </div>
                                             <div>
                                                 @csrf

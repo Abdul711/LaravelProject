@@ -29,6 +29,10 @@ Route::post('admin/signup',[AdminController::class,"register"]);
 Route::get('admin/forgot',[AdminController::class,"forgot"]);
 Route::get('admin/dashboard',[AdminController::class,"dashboard"]);
 Route::get('admin/category/manage/{id?}',[CategoryController::class,"create"]);
+Route::get('admin/category/delete/{id}',[CategoryController::class,"destroy"]);
+Route::get('admin/category/update_show/{id}',[CategoryController::class,"show_status"]);
+  
+    Route::get('admin/category/status/{id}',[CategoryController::class,"update_status"]);
 Route::get('admin/category',[CategoryController::class,"index"]);
 Route::post('admin/category/manageprocess',[CategoryController::class,"store"])->name('category.store');
 /* Category Crud Operation */
